@@ -1,0 +1,60 @@
+syntax="proto3";
+package order;
+option go_package="./pkg/order/pb";
+service OrderService{
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
+    rpc GetUserOrders(GetUserOrdersRequest) returns (GetUserOrdersResponse);
+    rpc GetOrderItems(GetOrderItemsRequest) returns (GetOrderItemsResponse);
+}
+message CreateOrderRequest{
+    string userid=1;
+    string addressid=2;
+}
+message CreateOrderResponse{
+    int64 status=1;
+    string error=2;
+    int64 id=3;
+}
+
+message GetUserOrdersRequest {
+    string userid = 1;
+}
+
+message GetUserOrdersResponse {
+    int64 status = 1;
+    string error = 2;
+    repeated Order orders = 3;
+}
+
+message Order {
+    int64 id = 1;
+    string userid = 2;
+    string addressid = 3;
+    double totalamount = 4;
+    string paymentmethod=5;
+    string orderstatus=6;
+    string paymentstatus=7;
+}
+
+message GetOrderItemsRequest {
+    string userid = 1;
+    string orderid = 2;
+}
+
+message GetOrderItemsResponse {
+    int32 status = 1;
+    string error = 2;
+    repeated OrderItem items = 3;
+}
+
+message OrderItem {
+    int64 id = 1;
+    int64 orderid = 2;
+    string productid = 3;
+    int64 quantity = 4;
+    double price = 5;
+    double amount=6;
+    string orderstatus=7;
+    string paymentmethod=8;
+    string  paymentstatus=9;
+}
